@@ -887,7 +887,7 @@ export function GenSpace() {
   // Force pro model + resolution when audio is attached (A2V only supports pro @ 1080p 16:9)
   useEffect(() => {
     if (inputAudio) {
-      setSettings(prev => applyForcedVideoSettings({ ...prev, model: 'pro' }))
+      setSettings(prev => applyForcedVideoSettings({ ...prev, model: 'pro', aspectRatio: '16:9' }))
     }
   }, [inputAudio]) // eslint-disable-line react-hooks/exhaustive-deps
 

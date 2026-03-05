@@ -3,7 +3,6 @@ import type { GenerationMode } from './ModeTabs'
 import {
   FORCED_API_VIDEO_FPS,
   FORCED_API_VIDEO_RESOLUTIONS,
-  FORCED_API_VIDEO_ASPECT_RATIOS,
   getAllowedForcedApiDurations,
   sanitizeForcedApiVideoSettings,
 } from '../lib/api-video-options'
@@ -172,25 +171,22 @@ export function SettingsPanel({
         </Select>
       </div>
 
-      {/* Aspect Ratio - only for API mode video */}
-      {forceApiGenerations && (
-        <Select
-          label="Aspect Ratio"
-          value={settings.aspectRatio || '16:9'}
-          onChange={(e) => handleChange('aspectRatio', e.target.value)}
-          disabled={disabled}
-        >
-          {hasAudio ? (
+      {/* Aspect Ratio */}
+      <Select
+        label="Aspect Ratio"
+        value={settings.aspectRatio || '16:9'}
+        onChange={(e) => handleChange('aspectRatio', e.target.value)}
+        disabled={disabled}
+      >
+        {hasAudio ? (
+          <option value="16:9">16:9 Landscape</option>
+        ) : (
+          <>
             <option value="16:9">16:9 Landscape</option>
-          ) : (
-            FORCED_API_VIDEO_ASPECT_RATIOS.map((ar) => (
-              <option key={ar} value={ar}>
-                {ar === '16:9' ? '16:9 Landscape' : '9:16 Portrait'}
-              </option>
-            ))
-          )}
-        </Select>
-      )}
+            <option value="9:16">9:16 Portrait</option>
+          </>
+        )}
+      </Select>
 
       {/* Audio and Camera Motion Row */}
       <div className="flex gap-3">

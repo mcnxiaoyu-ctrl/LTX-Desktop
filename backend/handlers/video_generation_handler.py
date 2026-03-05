@@ -112,12 +112,24 @@ class VideoGenerationHandler(StateHandlerBase):
         else:
             logger.info("Resolution %s - using 2-stage pipeline with upsampler", resolution)
 
-        RESOLUTION_MAP: dict[str, tuple[int, int]] = {
+        RESOLUTION_MAP_16_9: dict[str, tuple[int, int]] = {
             "540p": (960, 544),
             "720p": (1280, 704),
             "1080p": (1920, 1088),
         }
-        width, height = RESOLUTION_MAP.get(resolution, (960, 544))
+
+        def get_16_9_size(res: str) -> tuple[int, int]:
+            return RESOLUTION_MAP_16_9.get(res, (960, 544))
+
+        def get_9_16_size(res: str) -> tuple[int, int]:
+            w, h = get_16_9_size(res)
+            return h, w
+
+        match req.aspectRatio:
+            case "9:16":
+                width, height = get_9_16_size(resolution)
+            case "16:9":
+                width, height = get_16_9_size(resolution)
 
         num_frames = self._compute_num_frames(duration, fps)
 

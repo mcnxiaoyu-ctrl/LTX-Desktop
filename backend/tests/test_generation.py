@@ -757,8 +757,7 @@ class TestForcedApiGenerate:
             },
         )
 
-        assert r.status_code == 400
-        assert r.json()["error"] == "INVALID_FORCED_API_ASPECT_RATIO"
+        assert r.status_code == 422
 
     def test_extended_durations_for_fast_1080p_24fps(self, client, test_state, fake_services):
         test_state.config.force_api_generations = True
