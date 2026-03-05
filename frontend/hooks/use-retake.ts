@@ -36,7 +36,7 @@ export function useRetake() {
 
     setState({
       isRetaking: true,
-      retakeStatus: 'Uploading video and calling Retake API...',
+      retakeStatus: 'Generating',
       retakeError: null,
       result: null,
     })
